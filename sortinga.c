@@ -38,3 +38,15 @@ void	sort_isnfullsort_list(t_list **a)
 		ft_putendl(str);
 	}
 }
+
+void	sort_three(t_list **a)
+{
+	if (sorted(*a))
+		return ;
+	if (!is_nfsort(*a))
+	{
+		dispatcher("sa", a, a);
+		ft_putendl("sa");
+	}
+	sort_isnfullsort_list(a);
+}

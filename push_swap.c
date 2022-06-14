@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:27:21 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/14 16:05:29 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/14 17:38:55 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ int main(int argc, char **argv)
 	print_stack(a, b);
 	ft_printf("--------------\n");
 	if (sorted(a))
-		ft_printf("OK");
+		ft_printf("OK\n");
 	else if (is_nfsort(a))
 		sort_isnfullsort_list(&a);
+	if (ft_lstsize(a) < 4)
+		sort_three(&a);
 	print_stack(a, b);
 	free_lists(&a, &b);
 	return (0);

@@ -19,5 +19,7 @@ int		find_pivot(t_list *a);
 int		find_min(t_list *a);
 int		find_max(t_list *a);
 void	sort_isnfullsort_list(t_list **a);
+int		rev_sorted(t_list *a);
+void	sort_three(t_list **a);
 
 #endif

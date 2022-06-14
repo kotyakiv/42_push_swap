@@ -76,7 +76,7 @@ int	find_pivot(t_list *a)
 				return (elem);
 			temp = temp->next;
 		}
-		if (dif == -1 || dif == 0 || dif == 1)
+		if (dif == 1 || dif == 0)
 			return (elem);
 		++elem;
 		actual = actual->next;
