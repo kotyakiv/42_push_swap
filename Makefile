@@ -6,12 +6,12 @@
 #    By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 12:48:14 by ykot              #+#    #+#              #
-#    Updated: 2022/06/14 13:31:11 by ykot             ###   ########.fr        #
+#    Updated: 2022/06/14 15:27:04 by ykot             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = reading.c commands.c checker.c dispatcher.c checking.c printing.c
-SRC2 = reading.c commands.c dispatcher.c push_swap.c checking.c printing.c finding.c
+SRC2 = reading.c commands.c dispatcher.c push_swap.c checking.c printing.c finding.c sortinga.c
 OBJ = $(SRC:.c=.o)
 OBJ2 = $(SRC2:.c=.o)
 CFLAGS = -c -Wall -Werror -Wextra

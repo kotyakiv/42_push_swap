@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:27:21 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/14 14:16:34 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/14 15:33:06 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,15 @@ int main(int argc, char **argv)
 		}
 		++c;
 	}
-	ft_printf("Sorted\t%d\n", is_nfsort(a));
+	ft_printf("IsNotFullSorted\t%d\n", is_nfsort(a));
 	ft_printf("Pivot\t%d\n", find_pivot(a));
+	ft_printf("Size\t%d\n", ft_lstsize(a));
+	print_stack(a, b);
+	ft_printf("--------------\n");
+	if (sorted(a))
+		ft_printf("OK");
+	else if (is_nfsort(a))
+		sort_isnfullsort_list(&a);
 	print_stack(a, b);
 	free_lists(&a, &b);
 	return (0);

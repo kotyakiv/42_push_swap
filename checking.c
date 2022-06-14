@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 22:05:33 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/14 13:53:17 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/14 15:28:48 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	sorted(t_list *a)
 		if (a == NULL)
 			break ;
 		if (temp > *((int *)a->content))
-			return (1);
+			return (0);
 	}
-	return (0);
+	return (1);
 }
 
 int	is_nfsort(t_list *a)
