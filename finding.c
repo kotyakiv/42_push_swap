@@ -44,15 +44,15 @@ int	find_max(t_list *a)
 	return (elem);
 }
 
-static int	find_pivot_if_tree(t_list	*actual, t_list	*temp, int *dif)
+static int	find_pivot_if_tree(t_list	*actual, t_list	**temp, int *dif)
 {
-	if (actual == temp)
-		temp = temp->next;
-	if (temp == NULL)
+	if (actual == *temp)
+		*temp = (*temp)->next;
+	if (*temp == NULL)
 		return (1);
-	if (*((int *)actual->content) > *((int *)temp->content))
+	if (*((int *)actual->content) > *((int *)(*temp)->content))
 		*dif += 1;
-	if (*((int *)actual->content) < *((int *)temp->content))
+	if (*((int *)actual->content) < *((int *)(*temp)->content))
 		*dif -= 1;
 	return (0);
 }
@@ -72,14 +72,14 @@ int	find_pivot(t_list *a)
 		temp = a;
 		while (temp)
 		{
-			if (find_pivot_if_tree(actual, temp, &dif))
+			if (find_pivot_if_tree(actual, &temp, &dif))
 				return (elem);
 			temp = temp->next;
 		}
-		if (dif == 0 || dif == 1 || dif == -1)
+		if (dif == -1 || dif == 0 || dif == 1)
 			return (elem);
 		++elem;
 		actual = actual->next;
 	}
-	return (elem);
+	return (-1);
 }
