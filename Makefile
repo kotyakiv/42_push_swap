@@ -6,12 +6,14 @@
 #    By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 12:48:14 by ykot              #+#    #+#              #
-#    Updated: 2022/03/20 22:28:10 by ykot             ###   ########.fr        #
+#    Updated: 2022/06/14 13:31:11 by ykot             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = reading.c commands.c main.c dispatcher.c checking.c
+SRC = reading.c commands.c checker.c dispatcher.c checking.c printing.c
+SRC2 = reading.c commands.c dispatcher.c push_swap.c checking.c printing.c finding.c
 OBJ = $(SRC:.c=.o)
+OBJ2 = $(SRC2:.c=.o)
 CFLAGS = -c -Wall -Werror -Wextra
 NAME = checker
 
@@ -22,9 +24,28 @@ $(NAME):
 	@gcc -o $(NAME) $(OBJ) -L. -lft
 
 g:
-	@gcc -g -o a *.c libftprintf/*.c libftprintf/ft_printf/*.c
+	@gcc -g -o a $(SRC) libftprintf/*.c libftprintf/ft_printf/*.c
+
+gp:
+	@gcc -g -o a $(SRC2) libftprintf/*.c libftprintf/ft_printf/*.c
+	
+p:
+	@gcc $(CFLAGS) $(SRC2)
+	@gcc -o push_swap $(OBJ2) -L. -lft
+
 clean:
 	@rm -rf $(OBJ)
+
+cleanp:
+	@rm -rf $(OBJ2)
+	
 fclean: clean
 	@rm -rf $(NAME)
+
+fcleanp: cleanp
+	@rm -rf push_swap
+
+	
 re: fclean all
+
+rep: fcleanp p

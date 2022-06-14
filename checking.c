@@ -6,13 +6,13 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 22:05:33 by ykot              #+#    #+#             */
-/*   Updated: 2022/03/21 16:38:28 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/14 13:53:17 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-static int	sorted(t_list *a)
+int	sorted(t_list *a)
 {
 	int	temp;
 
@@ -28,23 +28,28 @@ static int	sorted(t_list *a)
 	return (0);
 }
 
-void	print_result(t_list *a, t_list *b)
+int	is_nfsort(t_list *a)
 {
-	if (sorted(a) || b != NULL)
-		ft_putendl("KO");
-	else
-		ft_putendl("OK");
-}
-
-void	print_list(t_list *a)
-{
-	size_t	i;
+	int	num;
+	int modflag;
+	t_list	*temp;
 	
-	i = ft_lstsize(a);
-	while (i--)
+	modflag = 0;
+	temp = a;
+	while (a)
 	{
-		ft_printf("%d\n", *((int *)a->content));
-		a = a->next;
+		num = *((int *)temp->content);
+		temp = temp->next;
+		if (temp == NULL)
+			break ;
+		if (temp->next == NULL &&  *((int *)temp->content) > *((int *)a->content))
+			return (0);
+		if (num > *((int *)temp->content))
+		{
+			if (modflag)
+				return (0);
+			modflag = 1;
+		}
 	}
-	ft_printf("end\n");
+	return (1);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 19:27:21 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/14 14:16:34 by ykot             ###   ########.fr       */
+/*   Created: 2022/03/19 10:51:25 by ykot              #+#    #+#             */
+/*   Updated: 2022/06/13 13:07:23 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker.h"
 
 int main(int argc, char **argv)
 {
@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	t_list	*b;
 	size_t	c;
 	char	*line;
-
+	
 	a = NULL;
 	b = NULL;
 	line = NULL;
@@ -38,9 +38,13 @@ int main(int argc, char **argv)
 		}
 		++c;
 	}
-	ft_printf("Sorted\t%d\n", is_nfsort(a));
-	ft_printf("Pivot\t%d\n", find_pivot(a));
+	while (get_next_line(0, &line))
+	{
+		dispatcher(line, &a, &b);
+		ft_strdel(&line);
+	}
 	print_stack(a, b);
+	print_result(a, b);
 	free_lists(&a, &b);
 	return (0);
 }
