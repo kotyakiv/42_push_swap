@@ -41,10 +41,10 @@ void print_stack(t_list *a, t_list *b)
 
 void	print_result(t_list *a, t_list *b)
 {
-	if (sorted(a) || b != NULL)
-		ft_putendl("KO");
-	else
+	if (full_sorted_a(a) && b == NULL)
 		ft_putendl("OK");
+	else
+		ft_putendl("KO");
 }
 
 void	print_list(t_list *a)

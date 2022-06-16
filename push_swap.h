@@ -3,7 +3,6 @@
 # include "libft.h"
 
 int		read_arg(t_list **a, const char *argv);
-int		sorted(t_list *a);
 void	del(void *content, size_t size);
 void	ft_swap(t_list **a);
 void	ft_push(t_list **a, t_list **b);
@@ -14,12 +13,14 @@ void	print_result(t_list *a, t_list *b);
 void	print_list(t_list *a);
 void	free_lists(t_list **a, t_list **b);
 void	print_stack(t_list *a, t_list *b);
-int		is_nfsort(t_list *a);
 int		find_pivot(t_list *a);
-int		find_min(t_list *a);
-int		find_max(t_list *a);
-void	sort_isnfullsort_list(t_list **a);
-int		rev_sorted(t_list *a);
-void	sort_three(t_list **a);
+void	final_list_sort_a(t_list **a);
+void	final_list_sort_b(t_list **b);
+void	sort_three_a(t_list **a);
+void	sort_three_b(t_list **b);
+int		sorted_b(t_list *b);
+int		sorted_a(t_list *a);
+int		full_sorted_b(t_list *b);
+int		full_sorted_a(t_list *a);
 
 #endif
