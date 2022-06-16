@@ -6,11 +6,19 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 10:51:25 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/16 15:14:28 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/16 17:45:50 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
+
+int	check_line(char *str)
+{
+	return (ft_strequ(str, "sa") || ft_strequ(str, "sb") || ft_strequ(str, "ss")
+		|| ft_strequ(str, "pa") || ft_strequ(str, "pb") || ft_strequ(str, "ra")
+		|| ft_strequ(str, "rb") || ft_strequ(str, "rr") || ft_strequ(str, "rra")
+		|| ft_strequ(str, "rrb") || ft_strequ(str, "rrr"));
+}
 
 int main(int argc, char **argv)
 {
@@ -40,6 +48,12 @@ int main(int argc, char **argv)
 	}
 	while (get_next_line(0, &line))
 	{
+		if (!check_line(line))
+		{
+			ft_putendl("Error");
+			free_lists(&a, &b);
+			return (0);
+		}
 		dispatcher(line, &a, &b);
 		ft_strdel(&line);
 	}

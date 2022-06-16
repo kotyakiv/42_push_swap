@@ -6,7 +6,7 @@
 #    By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 12:48:14 by ykot              #+#    #+#              #
-#    Updated: 2022/06/16 15:32:37 by ykot             ###   ########.fr        #
+#    Updated: 2022/06/16 17:16:04 by ykot             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ g:
 	@gcc -g -o a $(SRC) libftprintf/*.c libftprintf/ft_printf/*.c
 
 gp:
-	@gcc -g -o a $(SRC2) libftprintf/*.c libftprintf/ft_printf/*.c
+	@gcc -g -o a $(SRC2) -L. -lft
 	
 p:
 	@gcc $(CFLAGS) $(SRC2)

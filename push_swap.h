@@ -2,6 +2,7 @@
 # define PUSH_SWAP_H
 # include "libft.h"
 
+void	print_and_do_command(char *str, t_list **a, t_list **b);
 int		read_arg(t_list **a, const char *argv);
 void	del(void *content, size_t size);
 void	ft_swap(t_list **a);
