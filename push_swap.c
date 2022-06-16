@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:27:21 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/16 17:31:20 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/16 23:12:47 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,37 +20,40 @@ void	print_and_do_command( char *str, t_list **a, t_list **b)
 
 static void algo_bigger_three(t_list **a, t_list **b)
 {
-	int	size;
+	int	iter;
 	int num;
 	t_list *temp;
-
+	
 	while (/*full_sorted_a(*a) && b == NULL*/ 1)
 	{
 		if (sorted_a(*a) && b == NULL)
-			final_list_sort_a(a);
+			final_list_sort_a(a, b);
 			
 		else if ( (sorted_a(*a) || full_sorted_a(*a)) && (sorted_a(*b) || full_sorted_a(*b)) )
 		{
-			final_list_sort_a(a);
-			final_list_sort_b(b);
+			final_list_sort_a(a, b);
+			final_list_sort_b(a, b);
 			while (*b != NULL)
 				print_and_do_command("pa", a, b);
 			return ;
 		}
 		if (ft_lstsize(*a) < 4)
-			sort_three_a(a);
+			sort_three_a(a, b);
 		if (*b != NULL && ft_lstsize(*b) < 4 )
-			sort_three_a(b);
+			sort_three_a(a, b);
 			
 		else if (!sorted_a(*a) && ft_lstsize(*a) > 3)
 		{
 			num = *((int *)ft_lstelem(a, find_pivot(*a))->content);
 			temp = *a;
-			size = ft_lstsize(*a);
-			while (size--)
+			iter = ft_lstsize(*a) / 2;
+			while (temp && iter)
 			{
 				if (*((int *)temp->content) < num)
+				{
 					print_and_do_command("pb", a, b);
+					iter--;
+				}
 				else
 					print_and_do_command("ra", a, b);
 				temp = temp->next;
@@ -66,12 +69,12 @@ static void	algorithm(t_list **a, t_list **b)
 			return ;
 	if (sorted_a(*a))
 	{
-		final_list_sort_a(a);
+		final_list_sort_a(a, b);
 		return ;
 	}
 	if (ft_lstsize(*a) <= 3)
 	{
-		sort_three_a(a);
+		sort_three_a(a, b);
 		return ;
 	}
 	algo_bigger_three(a, b);
@@ -82,11 +85,9 @@ int main(int argc, char **argv)
 	t_list	*a;
 	t_list	*b;
 	size_t	c;
-	char	*line;
 
 	a = NULL;
 	b = NULL;
-	line = NULL;
 	if (argc == 1)
 	{
 		ft_putendl("No arguments!");

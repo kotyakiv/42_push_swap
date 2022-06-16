@@ -48,7 +48,7 @@ static int	fastest_way_to_sort_rb(t_list *b)
 	return (0);
 }
 
-void	final_list_sort_a(t_list **a)
+void	final_list_sort_a(t_list **a, t_list **b)
 {
 	char *str;
 
@@ -59,10 +59,10 @@ void	final_list_sort_a(t_list **a)
 	else
 		str = ft_strdup("rra");
 	while (!full_sorted_a(*a))
-		print_and_do_command(str, a, a);
+		print_and_do_command(str, a, b);
 }
 
-void	final_list_sort_b(t_list **b)
+void	final_list_sort_b(t_list **a, t_list **b)
 {
 	char *str;
 
@@ -73,23 +73,23 @@ void	final_list_sort_b(t_list **b)
 	else
 		str = ft_strdup("rrb");
 	while (!full_sorted_b(*b))
-		print_and_do_command(str, b, b);
+		print_and_do_command(str, a, b);
 }
 
-void	sort_three_a(t_list **a)
+void	sort_three_a(t_list **a, t_list **b)
 {
 	if (full_sorted_a(*a))
 		return ;
 	if (!sorted_a(*a))
-		print_and_do_command("sa", a, a);
-	final_list_sort_a(a);
+		print_and_do_command("sa", a, b);
+	final_list_sort_a(a, b);
 }
 
-void	sort_three_b(t_list **b)
+void	sort_three_b(t_list **a, t_list **b)
 {
 	if (full_sorted_b(*b))
 		return ;
 	if (!sorted_b(*b))
-	print_and_do_command("sb", b, b);
-	final_list_sort_b(b);
+	print_and_do_command("sb", a, b);
+	final_list_sort_b(a, b);
 }
