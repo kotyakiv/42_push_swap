@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:27:21 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/20 16:49:03 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/20 17:57:06 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
 	{
 		while (ft_lstsize(*a) > 3)
 		{
-			num = *((int *)ft_lstelem(a, find_pivot(*a))->content);
+			num = *((int *)ft_lstelem(a, find_pivot(*a, ft_lstsize(*a)))->content);
 			temp_a = *a;
 			iter = ft_lstsize(*a) / 2;
 			iterptr = &iter;
 			temp = ft_lstnew(iterptr, sizeof(int));
-			ft_lstappend(&(*stack), temp);
+			ft_lstadd(&(*stack), temp);
 			while (temp_a && iter)
 			{
 				if (*((int *)temp_a->content) < num)
@@ -85,35 +85,58 @@ static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
 			}
 		}
 	}
-	else
+	/*else
 	{
 		
-	}
+	}*/
 }
 
 static void quick_sort_b(t_list **a, t_list **b, t_list **stack)
 {
 	int num;
 	int iter;
+	int i;
 	t_list	*temp_b;
 
-	while (ft_lstsize(*b) > 3)
+	if (*stack == NULL)
+		return ;
+	
+	i = 0;
+	num = *((int *)ft_lstelem(b, find_pivot(*b, *(int *)(*stack)->content))->content);
+	temp_b = *b;
+	iter = *(int *)(*stack)->content / 2;
+	
+	while (i < *(int *)(*stack)->content && iter)
 	{
-		num = *((int *)ft_lstelem(b, find_pivot(*b))->content);
-		temp_b = *b;
-		iter = ft_lstsize(*b) / 2;
-		while (temp_b && iter)
+		if (*((int *)temp_b->content) > num)
 		{
-			if (*((int *)temp_b->content) < num)
-			{
-				print_and_do_command("pa", a, b);
-				iter--;
-			}
-			else
-				print_and_do_command("rb", a, b);
-			temp_b = temp_b->next;
+			print_and_do_command("pa", a, b);
+			iter--;
 		}
+		else
+			print_and_do_command("rb", a, b);
+		temp_b = temp_b->next;
+		++i;
 	}
+	
+	ft_lstdelelem(stack, 0, del);
+	
+	while (i--)
+		print_and_do_command("rrb", a, b);
+}
+
+static void stack_is_two(t_list **a, t_list **b, t_list **stack)
+{
+	if (*stack == NULL)
+		return ;
+	if (*(int *)(*stack)->content == 2)
+	{
+		print_and_do_command("pa", a, b);
+		print_and_do_command("pa", a, b);
+		ft_lstdelelem(stack, 0, del);
+	}
+	if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
+		print_and_do_command("sa", a, b);
 }
 
 static void algo_bigger_three(t_list **a, t_list **b)
@@ -137,6 +160,9 @@ static void algo_bigger_three(t_list **a, t_list **b)
 		/* sort stack a */
 		quick_sort_a(a, b, &stack);
 		
+		/* sort if stack is 2 */
+		stack_is_two(a, b, &stack);
+
 		/* sort stack b */
 		quick_sort_b(a, b, &stack);
 	}

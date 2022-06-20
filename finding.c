@@ -1,54 +1,13 @@
 #include "push_swap.h"
 
-int	find_min(t_list *a)
-{
-	int	min;
-	int	elem;
-	int i;
-	
-	min = *((int *)a->content);
-	elem = 0;
-	i = 0;
-	while (a)
-	{
-		if (min > *((int *)a->content))
-		{
-			min = *((int *)a->content);
-			elem = i;
-		}
-		a = a->next;
-		++i;
-	}
-	return (elem);
-}
-
-int	find_max(t_list *a)
-{
-	int	max;
-	int	elem;
-	int i;
-	
-	max = *((int *)a->content);
-	elem = 0;
-	i = 0;
-	while (a)
-	{
-		if (max < *((int *)a->content))
-		{
-			max = *((int *)a->content);
-			elem = i;
-		}
-		a = a->next;
-		++i;
-	}
-	return (elem);
-}
-
-static int	find_pivot_if_tree(t_list	*actual, t_list	**temp, int *dif)
+static int	find_pivot_if_tree(t_list	*actual, t_list	**temp, int *dif, int left)
 {
 	if (actual == *temp)
+	{
 		*temp = (*temp)->next;
-	if (*temp == NULL)
+		left--;
+	}
+	if (left == 0 || *temp == NULL)
 		return (1);
 	if (*((int *)actual->content) > *((int *)(*temp)->content))
 		*dif += 1;
@@ -57,24 +16,27 @@ static int	find_pivot_if_tree(t_list	*actual, t_list	**temp, int *dif)
 	return (0);
 }
 
-int	find_pivot(t_list *a)
+int	find_pivot(t_list *a, int size)
 {
 	t_list	*temp;
 	t_list	*actual;
 	int		dif;
 	int		elem;
+	int		i;
 
+	i = 1;
 	elem = 0;
 	actual = a;
-	while (actual)
+	while (elem < size && actual)
 	{
 		dif = 0;
 		temp = a;
-		while (temp)
+		while (temp && i <= size)
 		{
-			if (find_pivot_if_tree(actual, &temp, &dif))
+			if (find_pivot_if_tree(actual, &temp, &dif, size - i))
 				return (elem);
 			temp = temp->next;
+			++i;
 		}
 		if (dif == 1 || dif == 0)
 			return (elem);
