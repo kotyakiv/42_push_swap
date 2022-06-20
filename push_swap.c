@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:27:21 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/16 23:12:47 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/16 23:24:06 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ static void algo_bigger_three(t_list **a, t_list **b)
 	while (/*full_sorted_a(*a) && b == NULL*/ 1)
 	{
 		if (sorted_a(*a) && b == NULL)
+		{
 			final_list_sort_a(a, b);
+			return ;
+		}
 			
 		else if ( (sorted_a(*a) || full_sorted_a(*a)) && (sorted_a(*b) || full_sorted_a(*b)) )
 		{
@@ -37,6 +40,7 @@ static void algo_bigger_three(t_list **a, t_list **b)
 				print_and_do_command("pa", a, b);
 			return ;
 		}
+		
 		if (ft_lstsize(*a) < 4)
 			sort_three_a(a, b);
 		if (*b != NULL && ft_lstsize(*b) < 4 )
