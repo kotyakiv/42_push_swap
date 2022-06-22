@@ -6,17 +6,11 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:27:21 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/22 13:05:25 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/22 18:05:25 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	print_and_do_command( char *str, t_list **a, t_list **b)
-{
-	dispatcher(str, a, b);
-	ft_putendl(str);
-}
 
 static int	check_full_sort(t_list **a, t_list **b)
 {
@@ -61,92 +55,81 @@ static int	sort_stack_less_four(t_list **a, t_list **b)
 	return (modflag);
 }
 
-static void stack_is_less_two_b(t_list **a, t_list **b, t_list **stack)
-{
-	if (*stack == NULL)
-		return ;
-	if (*(int *)(*stack)->content == 2)
-	{
-		print_and_do_command("pa", a, b);
-		print_and_do_command("pa", a, b);
-		if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
-			print_and_do_command("sa", a, b);
-	}
-	if (*(int *)(*stack)->content == 1)
-		print_and_do_command("pa", a, b);
-	ft_lstdelelem(stack, 0, del);
-}
-
-static void stack_is_less_two_a(t_list **a, t_list **b, t_list **stack)
-{
-	if (*stack == NULL)
-		return ;
-	if (*(int *)(*stack)->content == 2)
-	{
-		if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
-			print_and_do_command("sa", a, b);
-	}
-	ft_lstdelelem(stack, 0, del);
-}
-
-
 static void quick_sort_b(t_list **a, t_list **b, t_list **stack)
 {
 	int num;
 	int iter;
 	int i;
 	int *iterptr;
-	int count;
+	int passed;
+	int left;
 	t_list	*temp_b;
 	
-	if (*stack == NULL)
-		return ;
-		
-	while (*stack != NULL && *(int *)(*stack)->content <= 2)
-		stack_is_less_two_b(a, b, stack);
-	
-	if (*stack == NULL)
-		return ;
-	
-	i = 0;
-	num = *((int *)ft_lstelem(b, find_pivot_b(*b, *(int *)(*stack)->content))->content);
-	temp_b = *b;
-	iter = *(int *)(*stack)->content / 2;
-	count = iter;
-	while (i < *(int *)(*stack)->content && iter)
+	if (*stack != NULL && *(int *)(*stack)->content == 2)
 	{
-		if (*((int *)temp_b->content) > num)
+		ft_lstdelelem(stack, 0, del);
+		print_and_do_command("pa", a, b);
+		print_and_do_command("pa", a, b);
+		if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
+					print_and_do_command("sa", a, b);
+	}
+	
+	while (*stack != NULL && *(int *)(*stack)->content > 2)
+	{
+		i = 0;
+		num = *((int *)ft_lstelem(b, find_pivot_b(*b, *(int *)(*stack)->content))->content);
+		temp_b = *b;
+		iter = *(int *)(*stack)->content / 2;
+		passed = iter;
+		while (i < *(int *)(*stack)->content && iter)
+		{
+			if (*((int *)temp_b->content) > num)
+			{
+				print_and_do_command("pa", a, b);
+				iter--;
+			}
+			else
+			{
+				print_and_do_command("rb", a, b);
+				++i;
+			}
+			temp_b = temp_b->next;
+		}
+	
+		while (ft_lstsize(*stack) > 1 && i--)
+			print_and_do_command("rrb", a, b);
+
+
+		if (passed == 2)
+		{
+			if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
+					print_and_do_command("sa", a, b);
+		}
+		
+		left = *(int *)(*stack)->content - passed;
+		if (left == 2)
 		{
 			print_and_do_command("pa", a, b);
-			iter--;
+			print_and_do_command("pa", a, b);
+			if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
+				print_and_do_command("sa", a, b);
+			ft_lstdelelem(stack, 0, del);
+			break ;
 		}
-		else
-		{
-			print_and_do_command("rb", a, b);
-			++i;
-		}
-		temp_b = temp_b->next;
 		
+		if (left > 2)
+		{
+			iterptr = &left;
+			ft_lstdelelem(stack, 0, del);
+			ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
+		}
+		if (passed > 2)
+		{
+			iterptr = &passed;
+			ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
+			break ;
+		}
 	}
-	
-	while (i--)
-		print_and_do_command("rrb", a, b);
-
-	
-	i = *(int *)(*stack)->content - count;
-	iterptr = &i;
-	ft_lstdelelem(stack, 0, del);
-	ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
-	if (count != 1)
-	{
-		iterptr = &count;
-		ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
-		if (*stack != NULL && *(int *)(*stack)->content <= 2)
-		stack_is_less_two_a(a, b, stack);
-	}
-	
-	else if (*stack != NULL && *(int *)(*stack)->content <= 2)
-		stack_is_less_two_b(a, b, stack);
 }
 
 static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
@@ -156,13 +139,9 @@ static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
 	int	*iterptr;
 	t_list *temp_a;
 	int i;
-	int count;
-	/*if (*stack != NULL && *(int *)(*stack)->content == 2)
-	{
-		if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
-			print_and_do_command("sa", a, b);
-		ft_lstdelelem(stack, 0, del);
-	}*/
+	int passed;
+	int left;
+
 	
 	if (full_sorted_a(*a))
 		return ;
@@ -190,18 +169,16 @@ static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
 			}
 		}
 	}
-	/*else if (*(int *)(*stack)->content == 1)
-		ft_lstdelelem(stack, 0, del);
-	*/
+
 	else
 	{
-		while (*(int *)(*stack)->content > 2)
+		while (*stack != NULL && *(int *)(*stack)->content > 2)
 		{
 			i = 0;
 			num = *((int *)ft_lstelem(a, find_pivot_a(*a, *(int *)(*stack)->content))->content);
 			temp_a = *a;
 			iter = *(int *)(*stack)->content / 2;
-			count = iter;
+			passed = iter;
 			while (temp_a && iter)
 			{
 				if (*((int *)temp_a->content) < num)
@@ -216,16 +193,37 @@ static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
 				}
 				temp_a = temp_a->next;
 			}
-			while (i--)
+			while (ft_lstsize(*stack) > 1 && i--)
 				print_and_do_command("rra", a, b);
 
+			left = *(int *)(*stack)->content - passed;
 			ft_lstdelelem(stack, 0, del);
-			iterptr = &count;
-			ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
-			if (*(int *)(*stack)->content == 1)
+			
+			if (left == 2)
 			{
 				if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
 					print_and_do_command("sa", a, b);
+			}
+			if (passed == 1)
+			{
+				print_and_do_command("pa", a, b);
+				break ;
+			}
+			if (passed >= 2)
+			{
+				iterptr = &passed;
+				ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
+			}
+			if (left >= 3)
+			{
+				iterptr = &left;
+				ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
+				continue ;
+			}
+			if (left > 3)
+			{
+				iterptr = &left;
+				ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
 			}
 		}
 	}
@@ -239,7 +237,7 @@ static void algo_bigger_three(t_list **a, t_list **b)
 	stack = NULL;
 	while (/*full_sorted_a(*a) && b == NULL*/ 1)
 	{
-		print_stack_s(*a, *b, stack);
+		//print_stack_s(*a, *b, stack);
 		/* Checkng for full sort */
 		if (b == NULL && check_full_sort(a, b))
 			return ;
@@ -255,6 +253,7 @@ static void algo_bigger_three(t_list **a, t_list **b)
 		/* sort stack b */
 		quick_sort_b(a, b, &stack);
 
+		//print_stack_s(*a, *b, stack);
 		/* sort stack a */
 		quick_sort_a(a, b, &stack);
 	}
@@ -301,11 +300,11 @@ int main(int argc, char **argv)
 		}
 		++c;
 	}
-	print_stack(a, b);
-	ft_printf("--------------\n");
+	//print_stack(a, b);
+	//ft_printf("--------------\n");
 	algorithm(&a, &b);
-	ft_printf("--------------\n");
-	print_stack(a, b);
+	//ft_printf("--------------\n");
+	//print_stack(a, b);
 	free_lists(&a, &b);
 	return (0);
 }

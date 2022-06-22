@@ -1,5 +1,11 @@
 #include "push_swap.h"
 
+void	print_and_do_command( char *str, t_list **a, t_list **b)
+{
+	dispatcher(str, a, b);
+	ft_putendl(str);
+}
+
 static int	find_pivot_if_tree(t_list	*actual, t_list	**temp, int *dif, int left)
 {
 	if (actual == *temp)
