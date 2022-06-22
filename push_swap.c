@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:27:21 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/20 17:57:06 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/22 13:05:25 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_and_do_command( char *str, t_list **a, t_list **b)
 
 static int	check_full_sort(t_list **a, t_list **b)
 {
-	if (sorted_a(*a) && b == NULL)
+	if (b == NULL && sorted_a(*a))
 	{
 		final_list_sort_a(a, b);
 		return (1);
@@ -43,12 +43,110 @@ static int	check_both_stacks_sort(t_list **a, t_list **b)
 	return (0);
 }
 
-static void	sort_stack_less_four(t_list **a, t_list **b)
+static int	sort_stack_less_four(t_list **a, t_list **b)
 {
-	if (ft_lstsize(*a) < 4)
+	int modflag;
+
+	modflag = 0;
+	if (ft_lstsize(*a) < 4 && !full_sorted_a(*a))
+	{
 		sort_three_a(a, b);
-	if (*b != NULL && ft_lstsize(*b) < 4 )
+		modflag = 1;
+	}
+	if (*b != NULL && ft_lstsize(*b) < 4 && !full_sorted_b(*b))
+	{
 		sort_three_b(a, b);
+		modflag = 1;
+	}
+	return (modflag);
+}
+
+static void stack_is_less_two_b(t_list **a, t_list **b, t_list **stack)
+{
+	if (*stack == NULL)
+		return ;
+	if (*(int *)(*stack)->content == 2)
+	{
+		print_and_do_command("pa", a, b);
+		print_and_do_command("pa", a, b);
+		if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
+			print_and_do_command("sa", a, b);
+	}
+	if (*(int *)(*stack)->content == 1)
+		print_and_do_command("pa", a, b);
+	ft_lstdelelem(stack, 0, del);
+}
+
+static void stack_is_less_two_a(t_list **a, t_list **b, t_list **stack)
+{
+	if (*stack == NULL)
+		return ;
+	if (*(int *)(*stack)->content == 2)
+	{
+		if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
+			print_and_do_command("sa", a, b);
+	}
+	ft_lstdelelem(stack, 0, del);
+}
+
+
+static void quick_sort_b(t_list **a, t_list **b, t_list **stack)
+{
+	int num;
+	int iter;
+	int i;
+	int *iterptr;
+	int count;
+	t_list	*temp_b;
+	
+	if (*stack == NULL)
+		return ;
+		
+	while (*stack != NULL && *(int *)(*stack)->content <= 2)
+		stack_is_less_two_b(a, b, stack);
+	
+	if (*stack == NULL)
+		return ;
+	
+	i = 0;
+	num = *((int *)ft_lstelem(b, find_pivot_b(*b, *(int *)(*stack)->content))->content);
+	temp_b = *b;
+	iter = *(int *)(*stack)->content / 2;
+	count = iter;
+	while (i < *(int *)(*stack)->content && iter)
+	{
+		if (*((int *)temp_b->content) > num)
+		{
+			print_and_do_command("pa", a, b);
+			iter--;
+		}
+		else
+		{
+			print_and_do_command("rb", a, b);
+			++i;
+		}
+		temp_b = temp_b->next;
+		
+	}
+	
+	while (i--)
+		print_and_do_command("rrb", a, b);
+
+	
+	i = *(int *)(*stack)->content - count;
+	iterptr = &i;
+	ft_lstdelelem(stack, 0, del);
+	ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
+	if (count != 1)
+	{
+		iterptr = &count;
+		ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
+		if (*stack != NULL && *(int *)(*stack)->content <= 2)
+		stack_is_less_two_a(a, b, stack);
+	}
+	
+	else if (*stack != NULL && *(int *)(*stack)->content <= 2)
+		stack_is_less_two_b(a, b, stack);
 }
 
 static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
@@ -57,7 +155,14 @@ static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
 	int num;
 	int	*iterptr;
 	t_list *temp_a;
-	t_list *temp;
+	int i;
+	int count;
+	/*if (*stack != NULL && *(int *)(*stack)->content == 2)
+	{
+		if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
+			print_and_do_command("sa", a, b);
+		ft_lstdelelem(stack, 0, del);
+	}*/
 	
 	if (full_sorted_a(*a))
 		return ;
@@ -66,12 +171,12 @@ static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
 	{
 		while (ft_lstsize(*a) > 3)
 		{
-			num = *((int *)ft_lstelem(a, find_pivot(*a, ft_lstsize(*a)))->content);
+			num = *((int *)ft_lstelem(a, find_pivot_a(*a, ft_lstsize(*a)))->content);
 			temp_a = *a;
 			iter = ft_lstsize(*a) / 2;
 			iterptr = &iter;
-			temp = ft_lstnew(iterptr, sizeof(int));
-			ft_lstadd(&(*stack), temp);
+			ft_lstadd(&(*stack), ft_lstnew(iterptr, sizeof(int)));
+			
 			while (temp_a && iter)
 			{
 				if (*((int *)temp_a->content) < num)
@@ -85,58 +190,46 @@ static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
 			}
 		}
 	}
-	/*else
-	{
-		
-	}*/
-}
-
-static void quick_sort_b(t_list **a, t_list **b, t_list **stack)
-{
-	int num;
-	int iter;
-	int i;
-	t_list	*temp_b;
-
-	if (*stack == NULL)
-		return ;
-	
-	i = 0;
-	num = *((int *)ft_lstelem(b, find_pivot(*b, *(int *)(*stack)->content))->content);
-	temp_b = *b;
-	iter = *(int *)(*stack)->content / 2;
-	
-	while (i < *(int *)(*stack)->content && iter)
-	{
-		if (*((int *)temp_b->content) > num)
-		{
-			print_and_do_command("pa", a, b);
-			iter--;
-		}
-		else
-			print_and_do_command("rb", a, b);
-		temp_b = temp_b->next;
-		++i;
-	}
-	
-	ft_lstdelelem(stack, 0, del);
-	
-	while (i--)
-		print_and_do_command("rrb", a, b);
-}
-
-static void stack_is_two(t_list **a, t_list **b, t_list **stack)
-{
-	if (*stack == NULL)
-		return ;
-	if (*(int *)(*stack)->content == 2)
-	{
-		print_and_do_command("pa", a, b);
-		print_and_do_command("pa", a, b);
+	/*else if (*(int *)(*stack)->content == 1)
 		ft_lstdelelem(stack, 0, del);
+	*/
+	else
+	{
+		while (*(int *)(*stack)->content > 2)
+		{
+			i = 0;
+			num = *((int *)ft_lstelem(a, find_pivot_a(*a, *(int *)(*stack)->content))->content);
+			temp_a = *a;
+			iter = *(int *)(*stack)->content / 2;
+			count = iter;
+			while (temp_a && iter)
+			{
+				if (*((int *)temp_a->content) < num)
+				{
+					print_and_do_command("pb", a, b);
+					iter--;
+				}
+				else
+				{
+					print_and_do_command("ra", a, b);
+					++i;
+				}
+				temp_a = temp_a->next;
+			}
+			while (i--)
+				print_and_do_command("rra", a, b);
+
+			ft_lstdelelem(stack, 0, del);
+			iterptr = &count;
+			ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
+			if (*(int *)(*stack)->content == 1)
+			{
+				if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
+					print_and_do_command("sa", a, b);
+			}
+		}
 	}
-	if ( *(int *)(*a)->content >  *(int *)(*a)->next->content)
-		print_and_do_command("sa", a, b);
+	
 }
 
 static void algo_bigger_three(t_list **a, t_list **b)
@@ -146,8 +239,9 @@ static void algo_bigger_three(t_list **a, t_list **b)
 	stack = NULL;
 	while (/*full_sorted_a(*a) && b == NULL*/ 1)
 	{
+		print_stack_s(*a, *b, stack);
 		/* Checkng for full sort */
-		if (check_full_sort(a, b))
+		if (b == NULL && check_full_sort(a, b))
 			return ;
 		
 		/* Checking if both stacks are sorted */
@@ -155,16 +249,14 @@ static void algo_bigger_three(t_list **a, t_list **b)
 			return ;
 		
 		/* if one of stack less than 4, sort it */
-		sort_stack_less_four(a, b);
+		if (sort_stack_less_four(a, b))
+			continue ;
 		
-		/* sort stack a */
-		quick_sort_a(a, b, &stack);
-		
-		/* sort if stack is 2 */
-		stack_is_two(a, b, &stack);
-
 		/* sort stack b */
 		quick_sort_b(a, b, &stack);
+
+		/* sort stack a */
+		quick_sort_a(a, b, &stack);
 	}
 }
 

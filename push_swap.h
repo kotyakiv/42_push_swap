@@ -14,7 +14,8 @@ void	print_result(t_list *a, t_list *b);
 void	print_list(t_list *a);
 void	free_lists(t_list **a, t_list **b);
 void	print_stack(t_list *a, t_list *b);
-int		find_pivot(t_list *a, int size);
+int		find_pivot_a(t_list *a, int size);
+int		find_pivot_b(t_list *a, int size);
 void	final_list_sort_a(t_list **a, t_list **b);
 void	final_list_sort_b(t_list **a, t_list **b);
 void	sort_three_a(t_list **a, t_list **b);
@@ -23,5 +24,7 @@ int		sorted_b(t_list *b);
 int		sorted_a(t_list *a);
 int		full_sorted_b(t_list *b);
 int		full_sorted_a(t_list *a);
+
+void print_stack_s(t_list *a, t_list *b, t_list *c);
 
 #endif
