@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:27:21 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/22 18:05:25 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/23 21:29:40 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	sort_stack_less_four(t_list **a, t_list **b)
 	return (modflag);
 }
 
-static void quick_sort_b(t_list **a, t_list **b, t_list **stack)
+static void quick_sort_b(t_list **a, t_list **b, t_list **stack, int *modflag)
 {
 	int num;
 	int iter;
@@ -125,6 +125,7 @@ static void quick_sort_b(t_list **a, t_list **b, t_list **stack)
 		}
 		if (passed > 2)
 		{
+			*modflag = 1;
 			iterptr = &passed;
 			ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
 			break ;
@@ -132,7 +133,7 @@ static void quick_sort_b(t_list **a, t_list **b, t_list **stack)
 	}
 }
 
-static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
+static void	quick_sort_a(t_list **a, t_list **b, t_list **stack, int *modflag)
 {
 	int	iter;
 	int num;
@@ -142,6 +143,12 @@ static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
 	int passed;
 	int left;
 
+	if (*modflag && full_sorted_a(*a))
+	{
+		ft_lstdelelem(stack, 0, del);
+		*modflag = 0;
+		return ;
+	}
 	
 	if (full_sorted_a(*a))
 		return ;
@@ -175,6 +182,7 @@ static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
 		while (*stack != NULL && *(int *)(*stack)->content > 2)
 		{
 			i = 0;
+			*modflag = 0;
 			num = *((int *)ft_lstelem(a, find_pivot_a(*a, *(int *)(*stack)->content))->content);
 			temp_a = *a;
 			iter = *(int *)(*stack)->content / 2;
@@ -233,7 +241,9 @@ static void	quick_sort_a(t_list **a, t_list **b, t_list **stack)
 static void algo_bigger_three(t_list **a, t_list **b)
 {
 	t_list	*stack;
+	int modflag;
 	
+	modflag = 0;
 	stack = NULL;
 	while (/*full_sorted_a(*a) && b == NULL*/ 1)
 	{
@@ -251,11 +261,11 @@ static void algo_bigger_three(t_list **a, t_list **b)
 			continue ;
 		
 		/* sort stack b */
-		quick_sort_b(a, b, &stack);
+		quick_sort_b(a, b, &stack, &modflag);
 
 		//print_stack_s(*a, *b, stack);
 		/* sort stack a */
-		quick_sort_a(a, b, &stack);
+		quick_sort_a(a, b, &stack, &modflag);
 	}
 }
 
