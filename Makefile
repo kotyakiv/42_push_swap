@@ -6,13 +6,15 @@
 #    By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 12:48:14 by ykot              #+#    #+#              #
-#    Updated: 2022/06/16 17:16:04 by ykot             ###   ########.fr        #
+#    Updated: 2022/06/27 15:34:08 by ykot             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = reading.c commands.c checker.c dispatcher.c printing.c stack_b.c stack_a.c
-SRC2 = reading.c commands.c dispatcher.c push_swap.c printing.c finding.c sortinga.c \
-stack_b.c stack_a.c
+SRC = reading.c commands.c checker.c dispatcher.c printing.c stack_b.c stack_a.c \
+sorting_stack.c finding_pivot.c
+SRC2 = reading.c commands.c dispatcher.c push_swap.c printing.c finding_pivot.c \
+sorting_stack.c first_stack_sort.c stack_b.c stack_a.c quick_sort_b.c quick_sort_a.c \
+algorithm.c wheel_algo.c
 OBJ = $(SRC:.c=.o)
 OBJ2 = $(SRC2:.c=.o)
 CFLAGS = -c -Wall -Werror -Wextra

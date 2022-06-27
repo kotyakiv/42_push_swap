@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 20:10:34 by ykot              #+#    #+#             */
-/*   Updated: 2022/03/17 11:21:17 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/27 13:53:19 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <string.h>
 # define BUFF_SIZE 1024
 # define MAX_FD 10
+# define TRUE 1
+# define FALSE 0
 
 typedef struct s_list
 {

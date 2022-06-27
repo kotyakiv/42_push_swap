@@ -41,3 +41,12 @@ int	sorted_b(t_list *b)
 	}
 	return (1);
 }
+
+void	sort_three_b(t_list **a, t_list **b)
+{
+	if (full_sorted_b(*b))
+		return ;
+	if (!sorted_b(*b))
+	print_and_do_command("sb", a, b);
+	final_list_sort_b(a, b);
+}

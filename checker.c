@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 10:51:25 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/16 17:45:50 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/27 15:43:18 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,14 @@ int main(int argc, char **argv)
 		{
 			ft_putendl("Error");
 			free_lists(&a, &b);
+			ft_strdel(&line);
 			return (0);
 		}
 		dispatcher(line, &a, &b);
 		ft_strdel(&line);
 	}
-	print_stack(a, b);
-	ft_printf("StackBIsNFullSorted\t%d\n", full_sorted_b(b));
+	ft_strdel(&line);
+	//print_stack(a, b);
 	print_result(a, b);
 	free_lists(&a, &b);
 	return (0);

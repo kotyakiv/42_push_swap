@@ -2,8 +2,8 @@
 
 void	free_lists(t_list **a, t_list **b)
 {
-	ft_lstdel(&(*a), del);
-	ft_lstdel(&(*b), del);
+	ft_lstdel(a, del);
+	ft_lstdel(b, del);
 }
 
 void print_stack(t_list *a, t_list *b)
@@ -45,19 +45,6 @@ void	print_result(t_list *a, t_list *b)
 		ft_putendl("OK");
 	else
 		ft_putendl("KO");
-}
-
-void	print_list(t_list *a)
-{
-	size_t	i;
-
-	i = ft_lstsize(a);
-	while (i--)
-	{
-		ft_printf("%d\n", *((int *)a->content));
-		a = a->next;
-	}
-	ft_printf("end\n");
 }
 
 void print_stack_s(t_list *a, t_list *b, t_list *c)
