@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 21:52:05 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/30 18:04:29 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/30 18:16:19 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,7 @@ void dispatcher(const char *str, t_list **a, t_list **b)
 {
 	if (sub_dispatcher(str, a, b))
 	{
-		ft_putendl("Error");
-		free_lists(a, b);
-			system("Leaks push_swap");
+		error_mes(a, b);
 		exit(0);
 	}
 }

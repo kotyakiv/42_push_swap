@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:21:06 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/29 17:58:16 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/30 18:17:13 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,11 @@ void	final_list_sort_b(t_list **a, t_list **b)
 		str = ft_strdup("rb");
 	else
 		str = ft_strdup("rrb");
+	if (!str)
+	{
+		error_mes(a, b);
+		exit(0);
+	}	
 	while (!full_sorted_b(*b))
 		print_and_do_command(str, a, b);
 	ft_strdel(&str);
