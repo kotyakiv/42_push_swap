@@ -6,53 +6,78 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 21:52:05 by ykot              #+#    #+#             */
-/*   Updated: 2022/03/21 20:45:32 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/30 18:04:29 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
+#include "push_swap.h"
 
-static void	ss(t_list **a, t_list **b)
+static int	ss(t_list **a, t_list **b)
 {
-	ft_swap(a);
-	ft_swap(b);
+	if (ft_swap(a))
+		return (1);
+	if (ft_swap(b))
+		return (1);
+	return (0);
 }
 
-static void	rr(t_list **a, t_list **b)
+static int	rr(t_list **a, t_list **b)
 {
-	ft_rotate(a);
-	ft_rotate(b);
+	if (ft_rotate(a))
+		return (1);
+	if (ft_rotate(b))
+		return (1);
+	return (0);
 }
 
-static void	rrr(t_list **a, t_list **b)
+static int	rrr(t_list **a, t_list **b)
 {
-	ft_revrotate(a);
-	ft_revrotate(b);
+	if (ft_revrotate(a))
+		return (1);
+	if (ft_revrotate(b))
+		return (1);
+	return (0);
 }
 
+/** 
+ * A simple disatcher is used for more convinient navigation
+**/
 
-void	dispatcher(const char *str, t_list **a, t_list **b)
-{ 
+static int	sub_dispatcher(const char *str, t_list **a, t_list **b)
+{
 	if (!strcmp(str, "sa"))
-		ft_swap(a);
+		return (ft_swap(a));
 	if (!strcmp(str, "sb"))
-		ft_swap(b);
+		return (ft_swap(b));
 	if (!strcmp(str, "ss"))
-		ss(a, b);
+		return (ss(a, b));
 	if (!strcmp(str, "pa"))
-		ft_push(a, b);
+		return (ft_push(a, b));
 	if (!strcmp(str, "pb"))
-		ft_push(b, a);
+		return (ft_push(b, a));
 	if (!strcmp(str, "ra"))
-		ft_rotate(a);
+		return (ft_rotate(a));
 	if (!strcmp(str, "rb"))
-		ft_rotate(b);
+		return (ft_rotate(b));
 	if (!strcmp(str, "rr"))
-		rr(a, b);
+		return (rr(a, b));
 	if (!strcmp(str, "rra"))
-		ft_revrotate(a);
+		return (ft_revrotate(a));
 	if (!strcmp(str, "rrb"))
-		ft_revrotate(b);
+		return (ft_revrotate(b));
 	if (!strcmp(str, "rrr"))
-		rrr(a, b);
+		return (rrr(a, b));
+	return (1);
+}
+
+void dispatcher(const char *str, t_list **a, t_list **b)
+{
+	if (sub_dispatcher(str, a, b))
+	{
+		ft_putendl("Error");
+		free_lists(a, b);
+			system("Leaks push_swap");
+		exit(0);
+	}
 }

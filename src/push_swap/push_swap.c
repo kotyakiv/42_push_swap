@@ -6,13 +6,13 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:27:21 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/27 14:04:47 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/30 17:24:47 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_list	*a;
 	t_list	*b;
@@ -21,23 +21,15 @@ int main(int argc, char **argv)
 	a = NULL;
 	b = NULL;
 	if (argc == 1)
-	{
-		ft_putendl("No arguments!");
-		return (0);
-	}
+		return (error_mes(&a, &b));
 	i = 1;
 	while ((int)i < argc)
 	{
 		if (read_arg(&a, argv[i]))
-		{
-			ft_putendl("Error");
-			free_lists(&a, &b);
-			return (0);
-		}
+			return (error_mes(&a, &b));
 		++i;
 	}
 	algorithm(&a, &b);
-	//print_stack(a, b);
 	free_lists(&a, &b);
 	return (0);
 }

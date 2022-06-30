@@ -6,11 +6,16 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 12:48:19 by ykot              #+#    #+#             */
-/*   Updated: 2022/03/20 15:49:39 by ykot             ###   ########.fr       */
+/*   Updated: 2022/06/30 17:18:36 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
+#include "push_swap.h"
+
+/**
+ * Check numbers for length and abc letters
+**/
 
 static int	check_int(const char *str)
 {
@@ -42,19 +47,23 @@ static int	check_int(const char *str)
 
 static int	check_dup(t_list *a, int num)
 {
-	t_list *temp;
+	t_list	*temp;
 
 	temp = a;
 	while (temp)
 	{
 		if (*(int *)(temp->content) == num)
 			return (1);
-		temp = temp->next; 
+		temp = temp->next;
 	}
 	return (0);
 }
 
-static void	free_split(char ***str)
+/**
+ * If input is incorrect free previous allocated memmory
+**/
+
+static int	free_split(char ***str)
 {
 	size_t	i;
 
@@ -67,13 +76,12 @@ static void	free_split(char ***str)
 	ft_strdel(&((*str)[i]));
 	free(*str);
 	*str = NULL;
-}
-
-static int	ret_freesplit(char ***str)
-{
-	free_split(&(*str));
 	return (1);
 }
+
+/**
+ * Read and check all arguments
+**/
 
 int	read_arg(t_list **a, const char *argv)
 {
@@ -91,10 +99,10 @@ int	read_arg(t_list **a, const char *argv)
 	while (str[i])
 	{
 		if (check_int(str[i]))
-			return (ret_freesplit(&str));
+			return (free_split(&str));
 		num = ft_atoi(str[i]);
 		if (check_dup(*a, num))
-			return (ret_freesplit(&str));
+			return (free_split(&str));
 		temp = ft_lstnew(numptr, sizeof(int));
 		ft_lstappend(&(*a), temp);
 		++i;
