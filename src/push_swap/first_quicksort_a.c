@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:59:28 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/30 16:00:06 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/03 17:37:09 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,28 @@
 
 static void	sorta_mr_three(t_list **a, t_list **b, t_list **stack, t_qvar *q)
 {
-	int	pivot;
+	int		pivot;
+	t_list	*temp;
 
 	pivot = find_pivot(*a, ft_lstsize(*a), 'a');
 	q->num = *((int *)ft_lstelem(a, pivot)->content);
-	q->t_l = *a;
+	q->tl = *a;
 	q->iter = ft_lstsize(*a) / 2;
 	q->iterptr = &q->iter;
-	ft_lstadd(&(*stack), ft_lstnew(q->iterptr, sizeof(int)));
-	while (q->t_l && q->iter)
+	temp = ft_lstnew(q->iterptr, sizeof(int));
+	if (!temp)
+		error_mes(a, b, stack);
+	ft_lstadd(&(*stack), temp);
+	while (q->tl && q->iter)
 	{
-		if (*((int *)q->t_l->content) < q->num)
+		if (*((int *)q->tl->content) < q->num)
 		{
-			print_and_do_command("pb", a, b);
+			print_and_do_command("pb", a, b, stack);
 			q->iter--;
 		}
 		else
-			print_and_do_command("ra", a, b);
-		q->t_l = q->t_l->next;
+			print_and_do_command("ra", a, b, stack);
+		q->tl = q->tl->next;
 	}
 }
 

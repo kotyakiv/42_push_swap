@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:21:06 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/30 18:17:13 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/03 15:43:32 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ int	sorted_b(t_list *b)
  * If the list consitis from three or less elements, the function sorts them
 **/
 
-void	sort_three_b(t_list **a, t_list **b)
+void	sort_three_b(t_list **a, t_list **b, t_list **stack)
 {
 	if (full_sorted_b(*b))
 		return ;
 	if (!sorted_b(*b))
-		print_and_do_command("sb", a, b);
-	final_list_sort_b(a, b);
+		print_and_do_command("sb", a, b, stack);
+	final_list_sort_b(a, b, stack);
 }
 
 /** 
@@ -109,22 +109,14 @@ static int	fastest_way_to_sort_rb(t_list *b)
  * Rotate the sorted list until it fully sorted
 **/
 
-void	final_list_sort_b(t_list **a, t_list **b)
+void	final_list_sort_b(t_list **a, t_list **b, t_list **stack)
 {
-	char	*str;
-
 	if (full_sorted_b(*b))
 		return ;
 	if (fastest_way_to_sort_rb(*b))
-		str = ft_strdup("rb");
+		while (!full_sorted_b(*b))
+			print_and_do_command("rb", a, b, stack);
 	else
-		str = ft_strdup("rrb");
-	if (!str)
-	{
-		error_mes(a, b);
-		exit(0);
-	}	
-	while (!full_sorted_b(*b))
-		print_and_do_command(str, a, b);
-	ft_strdel(&str);
+		while (!full_sorted_b(*b))
+			print_and_do_command("rrb", a, b, stack);
 }

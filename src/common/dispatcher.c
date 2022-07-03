@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 21:52:05 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/30 18:16:19 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/03 16:35:32 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ static int	sub_dispatcher(const char *str, t_list **a, t_list **b)
 	return (1);
 }
 
-void dispatcher(const char *str, t_list **a, t_list **b)
+void	dispatcher(const char *str, t_list **a, t_list **b, t_list **stack)
 {
 	if (sub_dispatcher(str, a, b))
 	{
-		error_mes(a, b);
+		error_mes(a, b, stack);
 		exit(0);
 	}
 }

@@ -6,17 +6,11 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:22:40 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/30 15:55:26 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/03 15:42:24 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	print_and_do_command( char *str, t_list **a, t_list **b)
-{
-	dispatcher(str, a, b);
-	ft_putendl(str);
-}
 
 /**
  * Count differnce in the list. If the number is bigger than other value add 1,

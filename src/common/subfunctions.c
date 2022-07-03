@@ -6,28 +6,29 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:19:44 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/30 17:26:20 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/03 15:38:47 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 #include "push_swap.h"
 
-void	free_lists(t_list **a, t_list **b)
+void	free_lists(t_list **a, t_list **b, t_list **stack)
 {
 	ft_lstdel(a, del);
 	ft_lstdel(b, del);
+	ft_lstdel(stack, del);
 }
 
 /** 
  * The function is used only to save space and use less lines in other functions
 **/
 
-int	error_mes(t_list **a, t_list **b)
+void	error_mes(t_list **a, t_list **b, t_list **stack)
 {
 	ft_putendl("Error");
-	free_lists(a, b);
-	return (-1);
+	free_lists(a, b, stack);
+	exit(0);
 }
 
 /** 

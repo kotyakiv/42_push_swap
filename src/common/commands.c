@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 13:00:03 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/30 18:05:32 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/03 17:17:10 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_swap(t_list **a)
 	t_list	*temp;
 
 	if (*a == NULL || (*a)->next == NULL)
-		return (1);
+		return (0);
 	temp = ft_lstnew((*a)->next->content, sizeof(int));
 	if (!temp)
 		return (1);
@@ -38,7 +38,7 @@ int	ft_push(t_list **a, t_list **b)
 	t_list	*temp;
 
 	if (*b == NULL)
-		return (1);
+		return (0);
 	temp = ft_lstnew((*b)->content, (*b)->content_size);
 	if (!temp)
 		return (1);
@@ -52,7 +52,7 @@ int	ft_rotate(t_list **a)
 	t_list	*temp;
 
 	if (*a == NULL || (*a)->next == NULL)
-		return (1);
+		return (0);
 	temp = ft_lstnew((*a)->content, (*a)->content_size);
 	if (!temp)
 		return (1);
@@ -69,7 +69,7 @@ int	ft_revrotate(t_list **a)
 
 	temp = *a;
 	if (temp == NULL || temp->next == NULL)
-		return (1);
+		return (0);
 	while (temp->next)
 	{
 		prev = temp;

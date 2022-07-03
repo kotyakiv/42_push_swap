@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 14:00:55 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/30 15:55:06 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/03 12:56:50 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@
  * the list a
 **/
 
-int	check_both_stacks_sort(t_list **a, t_list **b)
+int	check_both_stacks_sort(t_list **a, t_list **b, t_list **stack)
 {
 	if ((sorted_a(*a) || full_sorted_a(*a)) && \
 		(sorted_b(*b) || full_sorted_b(*b)))
 	{
 		if (sorted_a(*a))
-			final_list_sort_a(a, b);
+			final_list_sort_a(a, b, stack);
 		if (sorted_b(*b))
-			final_list_sort_b(a, b);
+			final_list_sort_b(a, b, stack);
 		while (*b != NULL)
-			print_and_do_command("pa", a, b);
+			print_and_do_command("pa", a, b, stack);
 		return (1);
 	}
 	return (0);
@@ -37,19 +37,19 @@ int	check_both_stacks_sort(t_list **a, t_list **b)
  * If one or both lists contain three or less elements, sorts them
 **/
 
-static int	sort_stack_less_four(t_list **a, t_list **b)
+static int	sort_stack_less_four(t_list **a, t_list **b, t_list **stack)
 {
 	int	modflag;
 
 	modflag = 0;
 	if (ft_lstsize(*a) < 4 && !full_sorted_a(*a))
 	{
-		sort_three_a(a, b);
+		sort_three_a(a, b, stack);
 		modflag = 1;
 	}
 	if (*b != NULL && ft_lstsize(*b) < 4 && !full_sorted_b(*b))
 	{
-		sort_three_b(a, b);
+		sort_three_b(a, b, stack);
 		modflag = 1;
 	}
 	return (modflag);
@@ -94,9 +94,9 @@ static void	algo_bigger_three(t_list **a, t_list **b)
 			ft_lstdel(&stack, del);
 			return ;
 		}
-		if (check_both_stacks_sort(a, b))
+		if (check_both_stacks_sort(a, b, &stack))
 			continue ;
-		if (sort_stack_less_four(a, b))
+		if (sort_stack_less_four(a, b, &stack))
 			continue ;
 		quick_sort_b(a, b, &stack, &modflag);
 		if (modflag && full_sorted_a(*a))
@@ -120,12 +120,12 @@ void	algorithm(t_list **a, t_list **b)
 		return ;
 	if (sorted_a(*a))
 	{
-		final_list_sort_a(a, b);
+		final_list_sort_a(a, b, NULL);
 		return ;
 	}
 	if (ft_lstsize(*a) <= 3)
 	{
-		sort_three_a(a, b);
+		sort_three_a(a, b, NULL);
 		return ;
 	}
 	algo_bigger_three(a, b);

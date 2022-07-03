@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quick_sort_a.c                                     :+:      :+:    :+:   */
+/*   quicksort_a.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 15:53:55 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/30 16:00:01 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/03 17:37:50 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void	init_qvar(t_qvar *q)
 {
-	q->t_l = NULL;
+	q->tl = NULL;
 	q->iter = 0;
 	q->num = 0;
 	q->iterptr = NULL;
@@ -26,6 +26,16 @@ void	init_qvar(t_qvar *q)
 	q->left = 0;
 	q->passed = 0;
 	q->modflag = 0;
+}
+
+static void	add_elem_stack(t_list **a, t_list **b, int	*ptr, t_list **stack)
+{
+	t_list	*temp;
+
+	temp = ft_lstnew(ptr, sizeof(int));
+	if (!temp)
+		error_mes(a, b, stack);
+	ft_lstadd(stack, temp);
 }
 
 /**
@@ -41,27 +51,27 @@ void	init_qvar(t_qvar *q)
 
 static int	passed_left_el(t_list **a, t_list **b, int passed, t_list **stack)
 {
-	int	*iterptr;
-	int	left;
+	int		*iterptr;
+	int		left;
 
 	left = *(int *)(*stack)->content - passed;
 	ft_lstdelelem(stack, 0, del);
 	if (left == 2)
-		passed_two_elem(a, b);
+		passed_two_elem(a, b, stack);
 	if (passed == 1)
 	{
-		print_and_do_command("pa", a, b);
+		print_and_do_command("pa", a, b, stack);
 		return (1);
 	}
 	if (passed >= 2)
 	{
 		iterptr = &passed;
-		ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
+		add_elem_stack(a, b, iterptr, stack);
 	}
 	if (left >= 3)
 	{
 		iterptr = &left;
-		ft_lstadd(stack, ft_lstnew(iterptr, sizeof(int)));
+		add_elem_stack(a, b, iterptr, stack);
 	}
 	return (0);
 }
@@ -78,22 +88,22 @@ static void	sort_a_stack_more_two(t_list **a, t_list **b, \
 	num = *(int *)(*stack)->content;
 	q->i = 0;
 	q->num = *((int *)ft_lstelem(a, find_pivot(*a, num, 'a'))->content);
-	q->t_l = *a;
+	q->tl = *a;
 	q->iter = num / 2;
 	q->passed = q->iter;
-	while (q->t_l && q->iter)
+	while (q->tl && q->iter)
 	{
-		if (*((int *)q->t_l->content) < q->num)
+		if (*((int *)q->tl->content) < q->num)
 		{
-			print_and_do_command("pb", a, b);
+			print_and_do_command("pb", a, b, stack);
 			q->iter--;
 		}
 		else
 		{
-			print_and_do_command("ra", a, b);
+			print_and_do_command("ra", a, b, stack);
 			++q->i;
 		}
-		q->t_l = q->t_l->next;
+		q->tl = q->tl->next;
 	}
 }
 
@@ -113,7 +123,7 @@ void	quick_sort_a(t_list **a, t_list **b, t_list **stack, int *modflag)
 		*modflag = 0;
 		sort_a_stack_more_two(a, b, stack, &q);
 		while (ft_lstsize(*stack) > 1 && q.i--)
-			print_and_do_command("rra", a, b);
+			print_and_do_command("rra", a, b, stack);
 		if (passed_left_el(a, b, q.passed, stack))
 			break ;
 	}

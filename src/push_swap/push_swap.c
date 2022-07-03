@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 19:27:21 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/30 17:24:47 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/03 17:50:20 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,17 @@ int	main(int argc, char **argv)
 {
 	t_list	*a;
 	t_list	*b;
-	size_t	i;
+	int		i;
 
 	a = NULL;
 	b = NULL;
 	if (argc == 1)
-		return (error_mes(&a, &b));
-	i = 1;
-	while ((int)i < argc)
-	{
+		return (0);
+	i = 0;
+	while (++i < argc)
 		if (read_arg(&a, argv[i]))
-			return (error_mes(&a, &b));
-		++i;
-	}
+			error_mes(&a, &b, NULL);
 	algorithm(&a, &b);
-	free_lists(&a, &b);
+	free_lists(&a, &b, NULL);
 	return (0);
 }
