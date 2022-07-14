@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 12:48:19 by ykot              #+#    #+#             */
-/*   Updated: 2022/06/30 17:18:36 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/14 12:53:41 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ int	read_arg(t_list **a, const char *argv)
 	size_t	i;
 
 	numptr = &num;
-	i = 0;
+	i = -1;
 	str = ft_strsplit(argv, ' ');
 	if (!str)
 		return (1);
-	while (str[i])
+	while (str[++i])
 	{
 		if (check_int(str[i]))
 			return (free_split(&str));
@@ -104,8 +104,9 @@ int	read_arg(t_list **a, const char *argv)
 		if (check_dup(*a, num))
 			return (free_split(&str));
 		temp = ft_lstnew(numptr, sizeof(int));
+		if (!temp)
+			return (free_split(&str));
 		ft_lstappend(&(*a), temp);
-		++i;
 	}
 	free_split(&str);
 	return (0);

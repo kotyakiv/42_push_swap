@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:59:28 by ykot              #+#    #+#             */
-/*   Updated: 2022/07/03 17:37:09 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/04 11:59:47 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	first_quick_sort_a(t_list **a, t_list **b, t_list **stack)
 
 	if (full_sorted_a(*a))
 		return ;
-	init_qvar(&q);
+	ft_bzero(&q, sizeof(q));
 	while (ft_lstsize(*a) > 3)
 		sorta_mr_three(a, b, stack, &q);
 }

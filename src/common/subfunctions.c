@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 12:19:44 by ykot              #+#    #+#             */
-/*   Updated: 2022/07/03 15:38:47 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/05 12:16:58 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	free_lists(t_list **a, t_list **b, t_list **stack)
 
 void	error_mes(t_list **a, t_list **b, t_list **stack)
 {
-	ft_putendl("Error");
+	ft_putendl_fd("Error", 2);
 	free_lists(a, b, stack);
-	exit(0);
+	exit(1);
 }
 
 /** 

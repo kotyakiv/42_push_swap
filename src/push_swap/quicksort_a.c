@@ -6,27 +6,11 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 15:53:55 by ykot              #+#    #+#             */
-/*   Updated: 2022/07/03 17:37:50 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/14 12:54:43 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/**
- * Initializing variablles for quick_sort algorithm
-**/
-
-void	init_qvar(t_qvar *q)
-{
-	q->tl = NULL;
-	q->iter = 0;
-	q->num = 0;
-	q->iterptr = NULL;
-	q->i = 0;
-	q->left = 0;
-	q->passed = 0;
-	q->modflag = 0;
-}
 
 static void	add_elem_stack(t_list **a, t_list **b, int	*ptr, t_list **stack)
 {
@@ -117,7 +101,7 @@ void	quick_sort_a(t_list **a, t_list **b, t_list **stack, int *modflag)
 
 	if (full_sorted_a(*a))
 		return ;
-	init_qvar(&q);
+	ft_bzero(&q, sizeof(q));
 	while (*stack != NULL && *(int *)(*stack)->content > 2)
 	{
 		*modflag = 0;

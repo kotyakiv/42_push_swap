@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 15:58:26 by ykot              #+#    #+#             */
-/*   Updated: 2022/07/03 17:39:53 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/04 11:59:04 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	quick_sort_b(t_list **a, t_list **b, t_list **stack, int *modflag)
 		left_passed_two_elem(a, b, stack);
 	while (*stack != NULL && *(int *)(*stack)->content > 2)
 	{
-		init_qvar(&q);
+		ft_bzero(&q, sizeof(q));
 		pivot = find_pivot(*b, *(int *)(*stack)->content, 'b');
 		q.num = *((int *)ft_lstelem(b, pivot)->content);
 		q.tl = *b;

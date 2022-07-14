@@ -6,7 +6,7 @@
 /*   By: ykot <ykot@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 15:31:48 by ykot              #+#    #+#             */
-/*   Updated: 2022/07/03 17:40:45 by ykot             ###   ########.fr       */
+/*   Updated: 2022/07/14 12:55:11 by ykot             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int		full_sorted_a(t_list *a);
 void	quick_sort_b(t_list **a, t_list **b, t_list **stack, int *modflag);
 void	quick_sort_a(t_list **a, t_list **b, t_list **stack, int *modflag);
 void	passed_two_elem(t_list **a, t_list **b, t_list **stack);
-void	init_qvar(t_qvar *q);
 void	first_sort_to_stacks(t_list **a, t_list **b, t_list **stack);
 void	algorithm(t_list **a, t_list **b);
 int		check_both_stacks_sort(t_list **a, t_list **b, t_list **stack);
