@@ -1,5 +1,5 @@
 # 42_push_swap
-The goal of this project is to sort all numbers in a stack with the smallest number of operations. This project consist of two programms **push_swap** and
+The goal of this project is to sort all numbers in a stack with the smallest number of operations. This project consists of two programms **push_swap** and
 **checker**. **push-swap** prints operations to sort algo and **checker** checks if operations really sort the stack.
 For this project students
 need go through a bunch of sorting algorithms and choose the one that suits the best for this task. I decided to implement and modify quicksort algorithm. 
